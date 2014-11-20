@@ -241,3 +241,18 @@ footer {
 .slideClone img {
     float: left;
 }
+
+.syntaxhighlighter
+{
+    overflow-y:hidden !important;
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: .8em !important;
+    line-height: 1.25em !important;
+    border-left: 5px solid #eee;
+}
+
+.syntaxhighlighter .line
+{
+    line-height: 1.25em !important;
+}
