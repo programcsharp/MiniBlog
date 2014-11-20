@@ -14,7 +14,7 @@
         xHtmlDocument.importNode(htmlDocument.body, true);
         xhtmlBody.appendChild(htmlDocument.body.firstChild);
 
-        /<body.*?><div>(.*?)<\/div><\/body>/i.exec(xHtmlDocument.documentElement.innerHTML);
+        /<body.*?><div>([\s\S]*?)<\/div><\/body>/i.exec(xHtmlDocument.documentElement.innerHTML);
         return RegExp.$1;
     }
 
@@ -121,7 +121,9 @@
               }
 
               showMessage(true, "The post was saved successfully");
-              cancelEdit(e);
+
+              // reload to get current content
+              window.location = window.location;
           })
           .fail(function (data) {
               if (data.status === 409) {
