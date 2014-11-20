@@ -16,6 +16,10 @@
 
     <link rel="stylesheet" href="@Blog.FingerPrint("/css/bootstrap-3.2.0.css", "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css")" />
     <link rel="stylesheet" href="@Blog.FingerPrint("/themes/" + Blog.Theme + "/site.css")" />
+    <link rel="stylesheet" href="@Blog.FingerPrint("/themes/" + Blog.Theme + "/site.css")" />
+    <link rel="stylesheet" href="@Blog.FingerPrint("/css/SyntaxHighlighter/shCoreRDark.css")" />
+    <link rel="stylesheet" href="@Blog.FingerPrint("/css/SyntaxHighlighter/shThemeRDark.css")" />
+
     <link rel="shortcut icon" href="@Blog.FingerPrint("/favicon.ico")" type="image/x-icon" />
     <link rel="dns-prefetch" href="http://gravatar.com/" />
 
@@ -113,7 +117,21 @@
     {
         @RenderPage("~/views/AdminMenu.cshtml")
     }
+    else
+    {
+        <script src="@Blog.FingerPrint("/vendor/sh/shCore.js")"></script>
+        <script src="@Blog.FingerPrint("/vendor/sh/shBrushJScript.js")"></script>
+        <script src="@Blog.FingerPrint("/vendor/sh/shBrushSql.js")"></script>
+        <script src="@Blog.FingerPrint("/vendor/sh/shBrushPowerShell.js")"></script>
+        <script src="@Blog.FingerPrint("/vendor/sh/shBrushXml.js")"></script>
+        <script src="@Blog.FingerPrint("/vendor/sh/shBrushCSharp.js")"></script>
+        <script src="@Blog.FingerPrint("/vendor/sh/shBrushCss.js")"></script>
+        <script src="@Blog.FingerPrint("/vendor/sh/shBrushRazor.js")"></script>
 
+        <script type="text/javascript">
+            SyntaxHighlighter.all()
+        </script>
+    }
 </body>
 </html>
 
