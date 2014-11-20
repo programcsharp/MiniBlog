@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<post>
+  <title>DataBinder.Eval and ExpandoObject with custom TypeDescriptor</title>
+  <slug>databinder-eval-expandoobject-custom-typedescriptor</slug>
+  <author>Chris Hynes</author>
+  <pubDate>2012-09-25 19:52:07</pubDate>
+  <lastModified>2014-11-20 17:18:41</lastModified>
+  <content>&lt;p&gt;I just ran into an issue where DataBinder.Eval was exploding with an exception like this:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;code&gt;
+'System.Dynamic.ExpandoObject' does not contain a definition for 'Id'.&lt;/code&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;The problem here is that DataBinder.Eval uses either reflection and type descriptors to bind to properties. ExpandoObject (and dynamic types) don't support reflection. ExpandoObject doesn't implement ICustomTypeDescriptor either, leading to an exception when attempting to bind to an ExpandoObject.&lt;/p&gt;
+
+&lt;p&gt;After half an hour of googling, I found Bertrand Le Roy's excellent example of building custom type descriptors: &lt;a href="http://weblogs.asp.net/bleroy/archive/2009/09/17/fun-with-c-4-0-s-dynamic.aspx"&gt;Fun with C# 4.0's dynamic&lt;/a&gt;. I'm not sure why it took me so long to find it, so I figure I'll give him a bit of google juice and add some more keywords.&lt;/p&gt;
+
+&lt;p&gt;Also, that sample is rather out of date, so you'll have to do a couple of tweaks to make it work in .NET 4/4.5 (see below). Once that's done, you will have a bindable wrapper object that takes an ExpandoObject and can be directly bound to. Given and ExpandoObject "dyn" with a property named "Id", you can do this:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;code&gt;&lt;pre&gt;var bindableObj = new DynamicTypeDescriptorWrapper(dyn);
+
+var value = DataBinder.Eval(bindableObj, "Id");
+&lt;pre /&gt;&lt;/pre&gt;&lt;/code&gt;&lt;/blockquote&gt;
+
+&lt;h2&gt;Changes required&lt;/h2&gt;
+&lt;p&gt;First, change DynamicHelper.cs to the following:&lt;/p&gt;
+&lt;blockquote&gt;&lt;code&gt;&lt;pre&gt;public static class DynamicHelper {
+    public static object GetValue(object dyn, string propName) {
+        // Warning: this is rather expensive, and should be cached in a real app
+        var GetterSite = CallSite&amp;lt;Func&amp;lt;CallSite, object, object&amp;gt;&amp;gt;.Create(
+                Binder.GetMember(CSharpBinderFlags.None,
+                    propName, 
+                    dyn.GetType(),
+                    new [] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) }
+                    ));
+
+        return GetterSite.Target(GetterSite, dyn);
+    }
+
+    public static void SetValue(object dyn, string propName, object val) {
+        // Warning: this is rather expensive, and should be cached in a real app
+        var SetterSite = CallSite&amp;lt;Func&amp;lt;CallSite, object, object, object&amp;gt;&amp;gt;.Create(
+                Binder.SetMember(CSharpBinderFlags.None,
+                    propName, 
+                    dyn.GetType(),
+                    new [] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null),
+                                CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.Constant |
+                                            CSharpArgumentInfoFlags.UseCompileTimeType, null) }
+                    ));
+
+        SetterSite.Target(SetterSite, dyn, val);
+    }
+}
+&lt;/pre&gt;&lt;/code&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;Then, change GetValue and SetValue in DynamicPropertyDescriptor as follows:&lt;/p&gt;
+&lt;blockquote&gt;&lt;code&gt;&lt;pre&gt;public override object GetValue(object component) {
+    if (component is DynamicTypeDescriptorWrapper)
+        component = ((DynamicTypeDescriptorWrapper)component).GetPropertyOwner(this);
+
+    if (_owner != component) throw new InvalidOperationException("GetValue can only be used with the descriptor's owner.");
+            
+    return DynamicHelper.GetValue(component, _propertyName);
+}
+
+public override void SetValue(object component, object value) {
+    if (component is DynamicTypeDescriptorWrapper)
+        component = ((DynamicTypeDescriptorWrapper)component).GetPropertyOwner(this);
+
+    if (_owner != component) throw new InvalidOperationException("SetValue can only be used with the descriptor's owner.");
+            
+    OnValueChanged(component, EventArgs.Empty);
+
+    DynamicHelper.SetValue(component, _propertyName, value);
+}
+&lt;/pre&gt;&lt;/code&gt;&lt;/blockquote&gt;</content>
+  <ispublished>true</ispublished>
+  <categories></categories>
+  <comments></comments>
+</post>

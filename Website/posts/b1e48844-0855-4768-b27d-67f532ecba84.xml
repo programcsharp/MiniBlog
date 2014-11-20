@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<post>
+  <title>Calculating compound interest with .NET and C#</title>
+  <slug>calculating-compound-interest-dotnet-cs</slug>
+  <author>Chris Hynes</author>
+  <pubDate>2012-10-09 15:11:19</pubDate>
+  <lastModified>2014-11-20 17:18:41</lastModified>
+  <content>&lt;p&gt;I spent some time looking for a simple compound interest calculation function in .NET today. I couldn't find anything usable, so I grabbed the source formula and reduced it to .NET.&lt;/p&gt;
+
+&lt;p&gt;Here's the formula:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;code&gt;&lt;pre&gt;
+A = P * (1 + r / n) ^ n * t
+A = final total amount
+P = principal amount
+r = interest rate (decimal)
+n = number of periods per year
+t = number of years
+&lt;/pre&gt;&lt;/code&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;The C# code:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;code&gt;&lt;pre&gt;
+decimal CalculateTotalWithCompoundInterest(decimal principal, decimal interestRate, int compoundingPeriodsPerYear, double yearCount)
+{
+    return principal * (decimal)Math.Pow((double)(1 + interestRate / compoundingPeriodsPerYear), compoundingPeriodsPerYear * yearCount);
+}
+&lt;/pre&gt;&lt;/code&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;For example, you can calculate the total loan amount for $10,000.00 (principal and interest), compounded daily for 2 years like so:&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;code&gt;
+decimal total = CalculateTotalWithCompoundInterest(10000m, 8.5m, 365, 2);
+&lt;/code&gt;&lt;/blockquote&gt;
+</content>
+  <ispublished>true</ispublished>
+  <categories></categories>
+  <comments></comments>
+</post>
