@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<post>
+  <title>HTPC Build Ideas and Setup Tweaks</title>
+  <slug>htpc-build-ideas-and-setup-tweaks</slug>
+  <author></author>
+  <pubDate>2014-11-23 10:34:03</pubDate>
+  <lastModified>2014-12-03 15:34:03</lastModified>
+  <excerpt></excerpt>
+  <content>&lt;p&gt;I just finished building and setting up my first Home Theater PC. It went very smoothly. I didn’t run into any of the typical config issues of yore when installing the machine -- driver issues, incompatible hardware, etc. Everything pretty much just worked. Of course, I didn't get into the hard part of HTPC -- handling live TV. I'm on DirecTV right now, and there's no way I'm aware of to do live TV on a PC with them. No CableCARD support, etc. And CableCARD just got shot down in congress anyway, so we'll see how long it lasts elsewhere.&lt;/p&gt; &lt;p&gt;&lt;a href="http://programcsharp.com/blog/posts/files/841cef08-0f0b-4f5c-a731-183f7c3e920a.jpg"&gt;&lt;img title="unnamed" style="border-top: 0px; border-right: 0px; background-image: none; border-bottom: 0px; padding-top: 0px; padding-left: 0px; border-left: 0px; display: inline; padding-right: 0px" border="0" alt="unnamed" src="http://programcsharp.com/blog/posts/files/3bdaea61-2f35-410c-b744-36c80e7928db.jpg"&gt;&lt;/a&gt; &lt;br&gt;&lt;em&gt;Cute little thing, ain't it?&lt;/em&gt;&lt;/p&gt; &lt;p&gt;Hardware:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;&lt;a href="http://www.amazon.com/Gigabyte-Intel-i7-4770R-Barebones-GB-BXi7-4770R/dp/B00HWP6CMG"&gt;Gigabyte BRIX 4770R&lt;/a&gt;  &lt;li&gt;16 GB RAM  &lt;li&gt;&lt;a href="https://www.amazon.com/gp/product/B00BQ8RKT4/ref=oh_aui_detailpage_o01_s00?ie=UTF8&amp;amp;psc=1"&gt;240 GB mSATA SSD&lt;/a&gt;  &lt;li&gt;&lt;a href="https://www.amazon.com/gp/product/B00J2LIC44/ref=oh_aui_detailpage_o01_s00?ie=UTF8&amp;amp;psc=1"&gt;Logitech K830 keyboard&lt;/a&gt;  &lt;li&gt;&lt;a href="https://www.amazon.com/gp/product/B004QRKWKQ/ref=oh_aui_detailpage_o03_s00?ie=UTF8&amp;amp;psc=1"&gt;Wireless Windows 360 controller kit&lt;/a&gt;  &lt;li&gt;&lt;a href="https://www.amazon.com/gp/product/B00KDNIRYA/ref=oh_aui_detailpage_o01_s00?ie=UTF8&amp;amp;psc=1"&gt;Windows Media Center/RC6 IR remote kit&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;Software:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;Windows 8.1 Pro  &lt;li&gt;Windows Media Center  &lt;li&gt;&lt;a href="http://plex.tv"&gt;Plex&lt;/a&gt;  &lt;li&gt;&lt;a href="http://kodi.tv"&gt;XBMC (now Kodi)&lt;/a&gt;  &lt;li&gt;&lt;a href="http://store.steampowered.com/bigpicture"&gt;Steam Big Picture mode&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;One note on Windows Media Center – if you decide you want that, just go ahead and buy the key online for $9.99. It’s ten bucks. Don’t try to find a working key somewhere like I did. It’ll appear to work, but it’ll bounce Windows into deactivated mode. And then Windows won’t let you downgrade and also won’t let you buy a key. Most people suggest just reinstalling at that point. I was able to sidestep the issue by buying a key on a different machine and applying it back on my HTPC. MS tech support aren’t very supportive either, as they assume you’re trying to pull some shenanigans. Be forewarned.&lt;/p&gt; &lt;p&gt;I typed out this entire post on the HTPC, looking at my TV and using the K830 keyboard. It’s surprisingly comfortable and usable, with big fat keys and fairly responsive key travel. The built in touchpad is brilliant -- you can easily mouse around without having to dig through the couch for a mouse.&lt;/p&gt; &lt;p&gt;My goals for this setup are:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;Be able to easily consume my recorded media from the TV. You can sort of do this with streaming to a 360, maybe with a TVersity server in back, but it’s fiddly.  &lt;li&gt;Hook in cloud streaming apps like Netflix, Pandora, etc. so they can be used as well  &lt;li&gt;Play Steam games that support the controller on the TV  &lt;li&gt;Full browser and potential for other apps in case I want to look up something, or do stuff like write this blog post&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;I’ve satisfied the basic requirements of these goals, but I’m a little disappointed in the lack of ability to do advanced orchestration. I haven’t found a way to do everything from one UI/app yet, or be able to do everything from the remote. Ironically enough, the best integrated things are the less than legitimate options. The paid apps like Netflix all wall themselves off in their own little gardens and don’t play with others. &lt;/p&gt; &lt;p&gt;Tweaks I did:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;Create a guest account and run all TV apps as a guest. This opens the HTPC up to everybody without worrying that somebody is going to screw things up or install a virus.  &lt;li&gt;Registry changes to auto logon guest account: &lt;pre&gt;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&lt;br&gt;AutoAdminLogon = REG_SZ 1
+DefaultPassword = ""
+DefaultUsername = "Guest"&lt;/pre&gt;
+&lt;li&gt;Registry changes to disable lock screen: &lt;pre&gt;HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization
+NoLockScreen = 1&lt;/pre&gt;
+&lt;li&gt;Don't require password on resume 
+&lt;ul&gt;
+&lt;li&gt;Go to Power Options control panel applet 
+&lt;li&gt;Click on "Require Password on Wakeup" on the left pane 
+&lt;li&gt;Select the option "Don't require a password"&lt;/li&gt;&lt;/ul&gt;
+&lt;li&gt;Change the guest profile picture to something good looking by overwriting guest.bmp and guest.png in C:\ProgramData\Microsoft\User Account Pictures 
+&lt;li&gt;&lt;a href="https://forums.plex.tv/index.php/topic/25523-unsupported-as-in-totally-unofficial-appstore/"&gt;Add the unsupported appstore to Plex&lt;/a&gt; for access to unsavory and pirate stream content 
+&lt;li&gt;Run plex as a service (thanks to &lt;a href="http://cloudsurvivalguide.com/running-plex-service-windows/)"&gt;http://cloudsurvivalguide.com/running-plex-service-windows/)&lt;/a&gt; 
+&lt;ul&gt;
+&lt;li&gt;Set up plex server as you want it on your account or some other user account 
+&lt;li&gt;When set up, remove it as a startup app (look in HKCU\Software\Microsoft\Windows\CurrentVersion\Run) 
+&lt;li&gt;Install Windows 2003 Resource Kit to get srvany.exe. This app will let you run any other app as a Windows Service. 
+&lt;li&gt;Execute the following in a Admin command prompt and/or .bat file to create the service: &lt;pre&gt;sc create Plex binpath= "C:\Program Files (x86)\Windows Resource Kits\Tools\srvany.exe" start= "auto" DisplayName= "Plex Media Server"
+
+REG ADD HKLM\SYSTEM\CurrentControlSet\Services\Plex\Parameters
+REG ADD HKLM\SYSTEM\CurrentControlSet\Services\Plex\Parameters /v AppDirectory /t REG_SZ /d "C:\Program Files (x86)\Plex\Plex Media Server"
+REG ADD HKLM\SYSTEM\CurrentControlSet\Services\Plex\Parameters /v Application /t REG_SZ /d "C:\Program Files (x86)\Plex\Plex Media Server\Plex Media Server.exe"
+
+Net Start Plex&lt;/pre&gt;
+&lt;li&gt;Go into the local Services settings and open Plex properties. Change the user in the Log On tab to point to the user you used to set up plex&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  <ispublished>true</ispublished>
+  <categories>
+    <category>HTPC</category>
+  </categories>
+  <comments></comments>
+</post>
